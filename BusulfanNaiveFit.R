@@ -1,6 +1,5 @@
-#workDir<-"/home/graeme/Dropbox/Thymic Development/BusulfanProjectFiles/"
-workDir<-"C:/Users/Graeme/Dropbox/Thymic Development/BusulfanProjectFiles"
-setwd(workDir)
+#workDir<-"CURRENT-REPO-LOCATION"
+#setwd(workDir)
 E<-exp(1)
 source("BusulfanPackages.R")
 
@@ -9,9 +8,11 @@ source("BusulfanPackages.R")
 
 #Code for bootstrapping naive busulfan data
 #User must ensure the following is correct
-cell<-"8nai"
+args <- commandArgs(trailingOnly = TRUE) 
+cell<-args[1]
 precursor<-paste("sp",substr(cell,1,1),sep="")
-precursor<-"sp8"
+
+#precursor<-"sp8"
 qZero<-1
 
 #requires folder ROutputs/ exists
