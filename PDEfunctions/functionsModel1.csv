@@ -1,0 +1,5 @@
+(N0*((-a + t)/tau)**(1/mu)*TonN)/E**((l - l/E**(a*r) + nu*r*(-a + t))/r)
+(N0*TonN)/E**((l - l/E**(a*r) + nu*r*(-a + t))/r)
+(N0*TonN)/E**((l - l/E**(a*r) + nu*r*(-a + t))/r)
+(N0*TonN)/E**((l - l/E**(a*r) + nu*r*(-a + t))/r)
+(N0*TonN + aBMT**(-1 - p)*(1 + p)*(a - t)**p*(N0 - aBMT*N0*TonN))/E**(((-1 + E**(r*t))*l)/E**(a*r)/r)

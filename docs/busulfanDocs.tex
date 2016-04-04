@@ -1,0 +1,508 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tufte-Style Book (Minimal Template)
+% LaTeX Template
+% Version 1.0 (5/1/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% IMPORTANT NOTE:
+% In addition to running BibTeX to compile the reference list from the .bib
+% file, you will need to run MakeIndex to compile the index at the end of the
+% document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{tufte-book} % Use the tufte-book class which in turn uses the tufte-common class
+
+\hypersetup{colorlinks} % Comment this line if you don't wish to have colored links
+
+\usepackage{microtype} % Improves character and word spacing
+
+\usepackage{amsmath} 
+\usepackage{nicefrac}
+
+\usepackage{lipsum} % Inserts dummy text
+
+\usepackage{booktabs} % Better horizontal rules in tables
+
+\usepackage{graphicx} % Needed to insert images into the document
+\graphicspath{{graphics/}} % Sets the default location of pictures
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio} % Improves figure scaling
+
+\usepackage{fancyvrb} % Allows customization of verbatim environments
+\fvset{fontsize=\normalsize} % The font size of all verbatim text can be changed here
+
+\newcommand{\hangp}[1]{\makebox[0pt][r]{(}#1\makebox[0pt][l]{)}} % New command to create parentheses around text in tables which take up no horizontal space - this improves column spacing
+\newcommand{\hangstar}{\makebox[0pt][l]{*}} % New command to create asterisks in tables which take up no horizontal space - this improves column spacing
+
+\usepackage{xspace} % Used for printing a trailing space better than using a tilde (~) using the \xspace command
+
+\newcommand{\monthyear}{\ifcase\month\or January\or February\or March\or April\or May\or June\or July\or August\or September\or October\or November\or December\fi\space\number\year} % A command to print the current month and year
+
+\newcommand{\openepigraph}[2]{ % This block sets up a command for printing an epigraph with 2 arguments - the quote and the author
+\begin{fullwidth}
+\sffamily\large
+\begin{doublespace}
+\noindent\allcaps{#1}\\ % The quote
+\noindent\allcaps{#2} % The author
+\end{doublespace}
+\end{fullwidth}
+}
+
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage} % Command to insert a blank page
+
+\usepackage{makeidx} % Used to generate the index
+\makeindex % Generate the index which is printed at the end of the document
+
+%----------------------------------------------------------------------------------------
+%	BOOK META-INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{Busulfan Chimera\\code documentation} % Title of the boo
+
+%\author{John Smith} % Author
+
+%\publisher{Publisher Name} % Publisher
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%\frontmatter
+
+%----------------------------------------------------------------------------------------
+%	EPIGRAPH
+%----------------------------------------------------------------------------------------
+
+%\thispagestyle{empty}
+%\openepigraph{Quotation 1}{Author, {\itshape Source}}
+%\vfill
+%\openepigraph{Quotation 2}{Author}
+%\vfill
+%\openepigraph{Quotation 3}{Author}
+
+%----------------------------------------------------------------------------------------
+
+\maketitle % Print the title page
+
+%----------------------------------------------------------------------------------------
+%	COPYRIGHT PAGE
+%----------------------------------------------------------------------------------------
+
+\newpage
+\begin{fullwidth}
+~\vfill
+\thispagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip}
+%Copyright \copyright\ \the\year\ \thanklessauthor
+
+%\par\smallcaps{Published by \thanklesspublisher}
+
+%\par\smallcaps{\url{http://www.bookwebsite.com}}
+
+%\par License information.\index{license}
+
+\par\textit{Current version, \monthyear}
+\end{fullwidth}
+
+%----------------------------------------------------------------------------------------
+
+\tableofcontents % Print the table of contents
+
+%----------------------------------------------------------------------------------------
+
+%\listoffigures % Print a list of figures
+
+%----------------------------------------------------------------------------------------
+
+%\listoftables % Print a list of tables
+
+%----------------------------------------------------------------------------------------
+%	DEDICATION PAGE
+%----------------------------------------------------------------------------------------
+
+
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+\chapter*{Introduction} % The asterisk leaves out this chapter from the table of contents
+\begin{fullwidth}
+These notes serve as documentation of the busulfan chimera codes used in the PNAS paper. Every attempt has been made to be comprehensive in the sense of not just justifying each step, but trying to illustrate potential pitfalls avoided by doing things a certain way. That being said, the codes themselves are devoid of such examples. This is done to provide as slim and simple a set of codes as possible; the codes provided give the right answer as provided in the paper and do not contain much exploration of failed avenues. 
+
+Where analytics (such as ODE solving) are required, Mathematica is used with R being used as much as possible. Mathematica was originally used in almost all cases, including numeric solving, but these routines have since largely been replaced by R equivalents with the forerunner MM codes \textit{not} provided.
+
+Finally, there is much room for improvement in these codes. Not only are there for-loops galore but they are not as modular and adaptive as perhaps they could be. As much as I would have liked to provided `software' rather than `codes' where everything can be easily manipulated through runtime variables, this wasn't always possible (though the BrdU codes are much better at this, having been started once I understood R better).
+%Citation example \cite{Tufte2001}, notice how the citation is in the margin. This is an example of how to add something to the index at the end of the document.\index{citation}
+
+%\newthought{Example of} the \texttt{newthought} command for starting new sections. Typography examples: \allcaps{all caps} and \smallcaps{small caps}.
+
+%------------------------------------------------
+
+\section{Files}
+
+As of \monthyear, the files in this set of codes are:
+\subsection{BusulfanPackages.R}
+Installs and/or loads required packages, is sourced in all other .R files.
+
+\subsection{DataPrepare.R}
+A basic data analysis routine which takes the raw counts from the .xlsx files and outputs rescaled donor fractions, total counts, and Ki67 percentage data.
+
+\subsection{BusulfanNaiveFit.R}
+First of two main fitting codes. Performs both the best fits and bootstraps. Requires the ratio and total count analytic functions to be hard coded.
+
+\subsection{AgeDependentLoss.R}
+Follows what is written in the PNAS paper to deal with the age-structured model.
+
+\subsection{Analysis.R}
+A slightly more involved analysis code. Reproduces all significant plots and data tables from the PNAS paper.
+
+\end{fullwidth}
+%------------------------------------------------
+
+ %\marginnote{This is a random margin note. Notice that there isn't a number preceding the note, and there is no number in the main text where this note was written. Use \texttt{sidenote} to use a number.}
+
+%----------------------------------------------------------------------------------------
+
+\mainmatter
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 1
+%----------------------------------------------------------------------------------------
+
+\chapter{DataPrepare.R}
+\label{ch:1}
+
+%------------------------------------------------
+
+\section{Overview}
+
+\begin{fullwidth}
+This R file takes in two data files: ChimeraCountsCompiled NO WT.xlsx  and ki67Data NO WT.xlsx with the latter only used towards the end of the code and is not required for the majority of outputs, with the former required for \textit{all} calculations. As indicated in the names, these files do not contain wild type data.
+
+This script does not currently take command line/run time arguments and so all modifications must be done to the file itself. Currently the output folder is ROutputs/ and so this must exist (will change).
+
+\end{fullwidth}
+%----------------------------------------------------------------------------------------
+\section{Outputs}
+This\marginnote{Currently we only consider Ki67 data from mice beyond 30wks post-BMT} routine will output the rescaled peripheral donor fraction (scaled to DP1 or SPx, see \texttt{thymic.precursors}), the total peripheral counts, the total precursor (DP1 or SPx) counts, and the Ki67+ percentages broken down by host/donor. 
+
+The rescaled peripheral donor fraction is defined as 
+\begin{equation}
+f_d(t) = \frac{1}{k(t)}\frac{N_d(t)}{N(t)}
+\end{equation}
+ where $k(t)$ can not only represent the chimerism in the animal (determined at SP or DP1 stages, in which case $k(t)=\chi$ is constant), but can be \textit{any} cell type deemed a suitable precursor for the population in question e.g. naive cells as precursors for memory cells (hence the potential time dependence).\marginnote{Fractions rescaled to a thymic population are given for all cell types, and so thymic precursors are required for all cell types.} This code allows one to specify a set of cells to be normalised only to a population in the thymus, as well as cell types we wish to have \textit{peripheral} precursors \textit{in addition} to thymic precursors.
+
+%----------------------------------------------------------------------------------------
+\section{User defined toggles}
+The main variables one might like to change are:
+
+
+\subsection{\texttt{cell.Types.nai}}
+ A vector of cell types to be investigated e.g. \texttt{c(``4nai'', ``8nai''')}. In reality, this is a vector of cell types we want to only normalise to precursors in the thymus. Rescaled donor fractions of these cell types are often used by subsequent cell types i.e. memory (thus they are calculated first and separately).
+
+\subsection{\texttt{thymic.precursors}} \index{precursors}
+ A vector of `precursor' types, each corresponding to an element in cell.types. Change spX to dp1 here to examine different normalisations. All cells, including those in \texttt{cell.Types.others} (defined below), require a thymic precursor to be specified. 
+
+\subsection{\texttt{cell.Types.others}} \marginnote{Several cell types, notably 8Tem and 8Tcm, have less data than the others. This is handled by setting `NA's to -1 and then removing all negative values prior to export. }
+Another vector of cell types, this time for cells we want to normalise to precursors in the periphery as well as the standard thymus normalisation. Currently functions for memory populations, should function just as well for others such as gdT/NKT/etc. A few vectors to fill manually but this gives maximum flexibility i.e. useful to normalise 8Tem to 8Tcm, for example.
+
+\subsection{\texttt{peripheral.precursors}}
+Cell types to act as precursors to cell types listed in \texttt{cell.Types.others}. Again, this normalized dataset is exported \textit{in addition} to the standard thymic normalisation (spX or DP1).
+
+\subsection{\texttt{cell.Types}}
+Defined as \texttt{c(``cell.Types.nai'',''cell.Types.others'')}. This is the master cell type list. 
+
+
+\subsection{\texttt{t.Shift}}\index{t.Shift}
+
+ Currently set to 42 (days) this determines the time of thymic reconstitution. All data prior to this time point are discarded from all outputs, so to investigate pre-reconstitution counts this needs to be reduced and the code re-run. 
+
+\subsection{\texttt{organ.Set}}\index{organ.Set}
+
+ Vector of organ types to pool over. Can be LN or SP or both, but must be of type vector with string elements. 
+
+\subsection{\texttt{naughty.mice}}\index{naughty.mice}
+
+ Mouse IDs for mice that were deemed to be aberrant in their peripheral donor fraction behaviour. These remain in the .xlsx data files but are removed from all analysis and fits.
+ 
+%----------------------------------------------------------------------------------------
+\section{Function glossary (not exhaustive)}
+
+\subsection{\texttt{collect.data(cell, organ.list, set)}}
+
+ Takes in data.frame `set' and calculates the total host and donor numbers for cell type `cell' in each of the organs. Used by subsequent functions to calculate the donor frac and total counts.
+
+\subsection{\texttt{get.ki67.numbers(cell, organ, population)}} \index{Ki67}
+
+ To get the ki67 positive percentage weighted average across the organs, we first compute the \textit{number} of Ki67+ cells in each organ and sum them. Here `population' refers to host/donor. This function returns the list \texttt{output=list(ki67+ cells, total  cells)}.
+
+\subsection{\texttt{export.Table(frame, file.name)}} 
+
+This function takes in a particular dataframe along with a file name. It assumes the first column of \texttt{frame} is a time vector and proceeds to take each subsequent column (corresponding to data for a given cell type) and bind it to this time vector making $n$ frames, exporting each. Prior to export, each of these temporary 2-column frames has all negative values removed. Negative values are introduced to label missing data (i.e. where NAs appear).
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 2
+%----------------------------------------------------------------------------------------
+
+\chapter{BusulfanNaiveFit.R}
+\label{ch:2}
+
+%------------------------------------------------
+
+\section{Overview}
+
+\begin{fullwidth}
+This R file takes in the prepared data as well as analytic functions and outputs the best fits and bootstrap parameter estimates for CD4 and CD8 naive cells. Currently this is only able to deal with the naive case or similar, i.e. cells governed by $N'(t) = \Theta(t)-\lambda N(t)$ where $\Theta(t)$ is the involuting thymic input term, and $\lambda$ is a constant net loss rate.
+
+Once the cell type has been chosen, the code imports three bits of information: the total counts, the rescaled donor fraction, and the (thymic) precursor total counts. The time points in use are taken directly from this data, and if these data sets are of different length or their rows do not correspond to the same mice, errors/incorrect answers will ensue. So long as no sorting is done prior to the importing of the data from DataPrepare.R, everything should be okay.
+\end{fullwidth}
+%------------------------------------------------
+\section{Derivation of analytics}
+We begin without assuming the existence of any addition populations, and simply model host and donor cells according to
+\begin{align}
+N'_d(t)&=\chi \Theta(t)-\lambda N_d (t)\notag{} , \\
+N'_h(t)&=(1-\chi)\Theta(t)-\lambda N_h(t).
+\end{align}
+Once the thymus can be said to have reconstituted (see \texttt{t.Shift}\index{t.Shift}\index{involution}) we assume it has resumed involuting according to
+\begin{equation}
+ \Theta(t)~=~e^{-\nu t}\Theta_0.
+ \end{equation}
+Thus $t=0$ is defined to be some time after reconstitituion, and \textit{not} equal to treatment time. Therefore\marginnote{The definition of $N_d(0)$ is motivated by the expectation that the initial donor numbers are proportional to $\chi$. Also, $0\leq \mu \leq 1$ (can't have greater chimerism in periphery unless donor kinetically different).}
+ we must allow for non-zero $N_d(0)$, and do so by defining the initial conditions
+\begin{align}
+ N_0 &= N_h(0)+N_d(0),\notag{} \\
+N_d(0) &= \chi \mu N_0.
+ \end{align}
+Solving the above equations yields
+\begin{align}
+f_d(t)&=\frac{1}{\chi}\frac{N_d(t)}{N_d(t)+N_h(t)},\notag{}\\
+& = 1-\frac{(\lambda-\nu)(1-\mu)}{\lambda-\nu-(1-e^{(\lambda-\nu)t})\nicefrac{\Theta_0}{N_0}}
+\end{align}
+
+We now include a population of `incumbent' host cells that evolves according
+\begin{align}
+I'(t)& = -q \lambda I(t), \notag{} \\
+\implies I(t)& = I_0 e^{-q\lambda t}
+\end{align}
+\marginnote{\textbf{Important:} The inclusion of incumbents means $N_0$ is no longer the initial total counts, but is now initial \textbf{displacable} counts, with total counts $N_T(0) = I_0+N_0$. This also means $\alpha$ is \textbf{not} the initial incumbent fraction. This is given by  $\nicefrac{\alpha}{1+\alpha}$ thus $\alpha$ \textbf{can be $>1$}.}This population has a different kinetic parameter, is entirely of type host, and has no thymic input. Defining $I_0 = \alpha N_0$ we can now write
+\begin{align}
+f_d(t)&=\frac{1}{\chi}\frac{N_d(t)}{N_d(t)+N_h(t)+I(t)},\notag{} \\
+& =  \left[1+\frac{(\lambda-\nu)\left(1+e^{(1-q)\lambda t}\alpha+\mu\right)}{\mu (\lambda-\nu)-\left(1-e^{(\lambda-\nu)t}\right)}\right]^{-1}
+\end{align}
+\index{$\mu$}Note that with the inclusion of the incumbent population, $\mu$ is \textbf{no longer} the initial value of the rescaled donor fraction, rather $f_d(0) = \nicefrac{N_0 \mu}{I_0+N_0}$. However the code uses $\mu$ not $f_d(0)$ and so we keep the above formalism in these notes. Also note that the rescaled donor fractions as defined are completely scale free, i.e. only depend on parameters that are rates or fractions, rather than parameters that have units involving absolute cell counts. 
+
+The same cannot be said of the total peripheral count function, $N_T(t) = N_d(t) +N_h(t)+I(t)$, given by
+\begin{equation}
+N_T(t) = N_0 \left(\alpha  e^{  -q \lambda t}+\frac{\nicefrac{\Theta_0}{N_0} e^{-\nu t}}{\lambda -\nu }+\frac{e^{  -t \lambda} ( \lambda -\nu -\nicefrac{\Theta_0}{N_0})}{\lambda -\nu }\right)
+\end{equation}
+
+These equations are hard-coded into the code but there exists a toggle to set $q=0$ to look at the case of lossless incumbents.\index{lossless incumbents} 
+%------------------------------------------------
+\section{Fitting procedure preliminaries}
+The \marginnote{Wherever `SSR' is mentioned it is almost certainly the global SSR, i.e. product of the two individual SSRs} goal of the fitting procedure is to minimize the sum of the squared residuals. In the case of simultaneously fitting the counts and rescaled donor fraction we actually want to minimize the \textit{product} of the SSRs of each set (see PNAS paper SI for discussion/derivation). Several functions are used to go from a set of parameters to a global SSR.
+
+
+A key point is that $\nu$, the rate of thymic involution\index{involution}, is \textit{not} fitted in the same breath as the other, peripheral, parameters. An inbuilt routine (\texttt{nls}) is used to estimate $\nu$ from the \texttt{precursorData}, and this estimate value of $\nu$ is then an \textit{input} into the functions that try to minimise the SSRs from the peripheral total counts and donor fraction.
+
+\subsection{ \texttt{header}}\index{\texttt{header}}
+The variable \texttt{header} is ubiquitous in all numeric SSR minimisation codes I wrote. In its simplest form it is a list of strings corresponding to the names of parameters that may be varied in order to minimise the SSR. In order to facilitate a more modular code, where we can set toggles to include or remove certain parameters (based on say, choice of model - more about that in the BrdU code) we build the \texttt{header} up iteratively. The initial declaration includes the bare set of parameters common to all models being considered. Then a series of \texttt{if()} statements, based on toggles (\texttt{qZero} in this case), will add additional parameters to this header \textbf{while} adding the appropriate initial and boundary values to the \texttt{start, upper,} and \texttt{lower} vectors which define the search range for the \texttt{GenSA()} minimiser. 
+
+In this code there is also an `outside' parameter $\nu$ the estimation of which is independent of the main SSR minimisation routine. This variable still appears in the header despite not having a corresponding entry in $\texttt{start}$ etc, and this is dealt with in \texttt{TransformFunctions()}.
+%------------------------------------------------
+\section{Function and variable glossary}
+Below we detail the functions used to go from a set of parameter values to a value of the global SSR. This is done in a `bottom up' approach, i.e. we discuss the lowest level functions first, starting with the transformation of the data and ending with the calculation of the global SSR.
+%------------------------------------------------
+\subsection{\texttt{ratioFn(t, pars)} and \texttt{totalCountFn(t, pars)}}
+
+
+\marginnote{Called by \texttt{TransformFunctions()}.}These functions correspond to the analytics derived above. The functions are evaluated with a set of parameters \texttt{pars}, given as a dataframe with the column names corresponding to the parameter names (see \texttt{header}), and a single or vector of time times \texttt{t}.
+%------------------------------------------------
+\subsection{Transforms \texttt{T(x) and T2(x)}} 
+\marginnote{Called by \texttt{TransformFunctions()}.}
+
+\index{heteroskedasticity} These two functions correspond to the transforms used on the counts and rescaled donor fraction respectively to ensure heteroskedasticity. The total counts are taken to be (in principle) unbounded and positive, and so $T(x) = \ln(x)$. The donor fractions are always $0\leq f_d(t) \leq 1$ and so $T2(x) = \arcsin\left(\sqrt{x}\right)$. 
+
+\textbf{Important note:} For physically reasonable parameters values, the rescaled donor fraction is always less than 1. However, for certain extreme parameter sets the function may tend to $1$ and due to small numerical instabilities may be evaluated to be slightly \text{more} than $1$, e.g. $1.00001$. In this case the $T2(x)$ function will return \texttt{NaN}\index{\texttt{NaN}}. This is dealt with by replacing \textbf{all} ratio values $>1$ with $1$. In this code with its simple analytic formalism this is safe enough, but for other more numerically oriented codes it is advisable to only replace values $1< x \leq 1+\delta$ to ensure it's only the small numerical errors that are at play and not something more sinister.
+%------------------------------------------------
+\subsection{\texttt{TransformFunctions(inVec, nu)}} 
+
+\marginnote{Called by \texttt{residFn()}.}Function used to apply transforms to analytic curves only. These curves are evaluated at times in \texttt{tVec} which corresponds to the times taken from the experimental data. The vector \texttt{inVec} corresponds to a vector of numbers fed in by the minimizer (or user).
+
+The minimizer itself does not know/care about the parameter labels; the order of values in \texttt{inVec} is simply determined by the order of the initial conditions and search range values fed in to the minimizer (see \texttt{findFit()}). We map these numeric values to their parameter names by converting it to a dataframe with column names given by \texttt{header}. Thus, the correspondence between/ordering of values in \texttt{header} and the initial/range vectors in \texttt{findFit()} determine which parameter gets which value. This will be laid out more clearly in \texttt{findFit()}.
+
+As $\nu$ is not part of the peripheral SSR minimization, it must not be `seen' by the \texttt{GenSA} minimizer, and thus is fed in as an additional argument and combined with the main parameter vector \texttt{inVec}. The inclusion of $\nu$ in \texttt{inVec} \textbf{must} match its location/inclusion in \texttt{header} otherwise there will be a very nasty mismatch when we set \texttt{names(pars)<-header}. As far as I can tell this is the best way to allow $\nu$ to be fed into the main routine (we cannot hard code it, need to bootstrap $\nu$ too!) without it being seen by \texttt{GenSA()}. 
+
+
+%------------------------------------------------
+\subsection{\texttt{residFn(parameters, cDat, rDat, nuVal)}}\marginnote{Called by \texttt{SSRfn()}.}
+
+Function to calculate the residuals, defined as the \textbf{predicted value minus the experimental} value (both defined on an appropriate-transform scale). This function returns a list of one dimensional residuals of the form \texttt{list(residC, residR)}. 
+%------------------------------------------------
+\subsection{\texttt{SSRfn(inVec,cDat,rDat,nuVal)}}\marginnote{Called by \texttt{findFit()}.}
+
+Primary function which is called to calculate the peripheral SSR. This function passes all arguments to \texttt{residFn(inVec,cDat,rDat,nuVal)} to get the residual values then calculates the SSR for both the total counts and rescaled donor fraction. The global SSR is then defined as the product of these two values and is returned.
+%------------------------------------------------
+\subsection{\texttt{findFit(dVec, nuVal)}}\marginnote{Called in main code and \texttt{doBoot()}.}
+
+Function called to invoke numeric minimization of global peripheral SSR based on the experimental data in \texttt{dVec} and $\nu$ value given to \texttt{nuVal}. The list \texttt{dVec} contains two one-dimensional vectors of the \textbf{transformed} values of the total counts and rescaled donor fraction respectively. The data fed into this main and subsequent routines is defined on the transformed scale to make bootstrapping (where residuals are defined on the transformed scale) easier.
+
+Within this function the \texttt{GenSA} simulated annealing function is called. This function requires the max number of iterations and initial temperature to be defined, as well as initial, lower, and upper values for all parameters to be estimated. These are defined \textbf{outside} the \texttt{findFit()} function so that one can vary which parameters are being fitted (i.e. set $q=0$ and remove it from the list of fitted parameters). 
+
+As noted in the sections on \texttt{header} and \texttt{TransformFunctions()} the length of the \texttt{header} will not match the length of the initial condition vectors. 
+%------------------------------------------------
+\subsection{\texttt{doBoot(pairedMice)}}\marginnote{Called in parallel foreach in main code.}\index{\texttt{pairedMice}}\index{bootstrapping}
+Function to take in best fit residuals and compute a boot strap replicate. Prior to declaration of this function, the best fit is run and the residuals calculated. These residuals are put into a 3-column dataframe containing the precursor, count, and donor fraction residuals respectively. The key point here is that the residuals in each row all correspond to the same mouse. The residuals in this dataframe are all defined on their respective \textbf{transformed} scales.
+
+This function then takes a random sample (of rows) with replacement from \texttt{pairedMice}. The new data to fit to is then reconstructed by adding the \textbf{transformed} best fit values of the functions to this choice of residuals. The new precursor data is then used to extract a new value of $\nu$ which, along with the new count and ratio data, is fed into the \texttt{findFit()} function to return a best fit for that boot strap replicated. Currently only the parameter estimates, not the SSRs, for these bootstrap fits are returned. 
+
+\section{Parallel implementation of bootstraping}\index{parallelisation}
+\marginnote{In principle one could endeavour to parallelise \texttt{GenSA()} itself as this would make all SSR minimizations, even those of a `single replicated'-type, embarrassingly parallel. However, currently only globally independent processes, such as bootstrapping or fitting different models (BrdU) is done in parallel. } Every effort has been made to parallelise where possible. In this code the simultaneous fitting of bootstrap replicates is achieved through the \texttt{parallel} and \texttt{doParallel} packages. 
+
+The variable \texttt{nLogicalCores} can be set manually or made to automatically detect the number of cores present on a system. The \texttt{makeCluster(nLogicalCores)} command then initializes a local parallel cluster which is regisgetered by \texttt{registerDoParallel}. Once this is done loops of the form \texttt{foreach() \%do\% \{...} may be made parallel simply by changing this to \texttt{foreach() \%do\textbf{par}\% \{...} 
+
+It is important to note that only variables called explicitly (i.e. not through several layers of functions) within the parallel loop will have their definitions exported to these parallel environments. Furthermore, any packages required by functions called must have their packages loaded within the loop. %include discussion of error handling?
+
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 3
+%----------------------------------------------------------------------------------------
+
+\chapter{AgeDependentLoss.R}
+\label{ch:3}
+
+%------------------------------------------------
+
+\section{Overview}
+
+\begin{fullwidth}
+
+This code follows the same logic as the BusulfanNaiveFit.R file, except now the functions are described by PDEs not ODEs. The code follows the same definitions used in the PNAS paper, and as such provides a good starting point for understanding this routine. Functions like calculate residuals and transform values are all identical in function if not in implementation, it is only the actual functions themselves and the addition of another parameter $\mu$ (\textbf{not} the same as the incumbent model $\mu$), estimated from the thymic data, that makes this code different. It is much slower as numerical integrals (of the PDEs) are involved.
+
+\end{fullwidth}
+%------------------------------------------------
+\section{Settings to keep in mind}
+%------------------------------------------------
+As noted in the PNAS paper, the initial total counts of the population $N_0$ are specified manually because when left as a free and fitted parameter it becomes unphysically large.  Most of the key settings for this routine are at the start. The reconstitution time and treatment age are informed by the data and so should remain unchanged if the current data is being used. All that is left to choose is the model being fitted (determined by the value of $p$) and which cell type. 
+
+A key difference in the PDE approach is the use of pre-reconstitution data. In order to estimate $mu$ we need to know how the donor counts in the thymus behave pre-reconstitution. However, the peripheral data (as well as the total precursor counts in the thymus\marginnote{In principle one could also use pre-reconstitution total precursor data to estimate $\nu$.}) used to calculate the residuals and thus the data that is being fitted to is taken to be \textbf{post-}reconstitution. This is so we are fitting to the same peripheral data as in the incumbent case and can use AIC and other statistical methods to compare between them; AIC is contingent on the same data being used to discriminate between models.
+
+
+\section{Function and variable glossary}
+\subsection{\texttt{functions}}
+This code differs from the incumbent case in that the functions that represent the total counts and donor fractions are prepared in Mathematica and exported as .csv files rather than hard coded. They stay in the .R script as unevaluated expressions until they are passed to \texttt{calculate.outputs()}. Specifically, \texttt{functions} is a list of the following expressions:
+\begin{enumerate}
+\item donor counts pre-reconstitution (thymically derived)
+\item total counts pre-reconstitution (thymically derived)
+\item donor post-recons
+\item total post-recons
+\item host pre-treatment (initial distribution of cells at time of treatment)
+\end{enumerate}
+
+\subsection{\texttt{fit.thymic.pararameters(precursor.counts,donor.precursor.dp1}}
+This function fits the involution rate $\nu$ in the normal way, as well as the reconstitution rate $\mu$. The latter is extracted from the percentage of donor cells at stage DP1 pre-reconstitution.
+
+\subsection{\texttt{calculate.outputs(t,all.pars)}}
+This takes in a collection of parameters and calculates the number of donor and donor+host cells present at time $t$. This involves integrating the PDEs over $a$ appropriately, which is done using the inbuilt \texttt{integrate()} function and calling \texttt{eval.fn()} to evaluate functions imported in the .csv file.
+
+%----------------------------------------------------------------------------------------
+%	CHAPTER 4
+%----------------------------------------------------------------------------------------
+
+\chapter{Analysis.R}
+\label{ch:4}
+
+%------------------------------------------------
+
+\section{Overview}
+
+\begin{fullwidth}
+
+This code takes the outputs of BusulfanNaive.R and performs analysis to produce plots and tables found in the paper. Currently this only contains routines to compute tables/figures for the incumbent model, with the age-dependent PDE and RTE models analysed separately.
+
+\end{fullwidth}
+%------------------------------------------------
+\section{Settings to keep in mind}
+\begin{itemize}
+\item Currently this code assumes that the incumbents are \textbf{lossless}\index{lossless incumbents}, i.e. $q=0$ and so this is hardcoded throughout. This is reasonable as not only do the AIC values from the best fit comparing $q\neq 0$ with $q=0$ favour the simpler case, but one can easily allow $q$ to be free in \texttt{BusulfanNaive.R} and examine the resulting bootstrap values for $q$.  
+
+\item Many of the plots require that we have $t=0$ correspond to BMT and not reconstitution, and so once again we need to define \texttt{t.Shift}\index{t.Shift} (=42d by default).
+
+\item The parameters produced by the fitting code output total \textbf{displacable} numbers $N_0$ scaled by $10^7$ and so this factor is restored here.
+
+\item Currently the total count and peripheral ratio donor fraction functions are hardcoded here as well - this will be changed so that both the fitting file and this file import the same functions to avoid mismatch.
+
+\item No weeks $	\leftrightarrow$ days converstions are done here. Whatever time scale is used in the imported data and parameter values is what is used so this needs to be consistent.
+
+\item \index{Ki67} When using Ki67 data to calculate $\rho$ and $\delta$ we consider three values of $\sigma= \delta_Y/\delta_X \in \{0.1,1,10\}$ where $X$ and $Y$ are Ki67$^{\textrm{lo}}$ and Ki67$^{\textrm{hi}}$ populations respectively. These values may be changed in the vector \texttt{sigT}. Additionally, we assume that 20\% of the thymically derived cells are Ki67$^{\textrm{hi}}$, which may be changed through variable \texttt{kP}.
+\end{itemize}
+
+\section{Primary outputs}
+
+As stated the goal of this code is to output the tables and plot values found in the paper.
+
+\subsection{\texttt{physicalPars}}
+
+This dataframe corresponds to the first three rows of Table 1 in the PNAS paper but also contains some extra values of interest. Remember that the initial values such as $N_0$ and $\Theta_0$ correspond to values \textbf{at reconstitution} i.e. at 42 days post-BMT. This is then done for a range of $t$ values and plotted.
+%------------------------------------------------
+\subsection{\texttt{countPlot}, \texttt{ratioPlot}, and \texttt{incumbentFracPlot}}
+
+These plots correspond to the first four panels in figure three (though less pretty as I suck at ggplot and the first round were Mathemagica + Illustrator).
+
+Confidence intervals are calculated by computing all possible values for $f(t,\vec{\beta})$ where $\vec{\beta}$ is a choice of bootstrapped parameters, and then computing upper and lower quantiles.
+
+%------------------------------------------------
+\subsection{\texttt{kinetic.Parameters}}
+
+This corresponds to the following list of dataframes\\
+\begin{itemize}
+\item \texttt{lifetime:} lifetime of displacable cells 
+\item \texttt{interdiv:} interdivision time of displacable cells 
+\item \texttt{incumtime:} lifetime=interdivision time of incumbent cells
+\item \texttt{pooledT1Delta, pooledT2Delta:} lifetime of pooled population taken at $t=$\texttt{t1,t2} (currently 98 and 308 days, i.e. 14 and 44 wks)
+\item \texttt{pooledT1Rho, pooledT2Rho:} interdivision time of pooled population
+\end{itemize}
+
+These values are calculated by starting with the equation for $\rho$ (see PNAS paper for derivation) given by
+\begin{equation}
+\rho = \frac{\kappa (1+\kappa(\sigma-1)+\lambda T(\epsilon+\sigma-\epsilon \sigma))-\lambda T \epsilon}{T(1-\kappa)(2+\kappa(\sigma-1))}
+\end{equation}
+where $\kappa$ corresponds to percentage of cells that are Ki67$^+$, $\epsilon$ is the percentage of source (thymic) cells that are Ki67$^+$, $\sigma$ is the ratio of the loss rates for Ki67$^{\pm}$ cells, and $T$ is the mean lifetime of Ki67 expression.
+
+We observed that the Ki67\% varied somewhat for early mice and so, as detailed in \texttt{DataPrepare.R}, we take Ki67 measurements from mice only after 30wks. We cannot create a best fit point estimate for $\rho$ as such, as we do not have a `best fit' Ki67 value (though in principle we could use the mean. Instead we take a Monte-Carlo approach and simultaneously sample parameters from \\
+a.) our parameter bootstraps (to get $\lambda$),\\
+b.) the Ki67 data, and\\
+c.) a log-normal distrubtion of Ki67 lifetimes. 
+
+
+This is run $10^4$ times and means and confidence intervals are taken. In the case of incumbent cells $\lambda = 0$ (lossless incumbent assumption \index{lossless incumbents}) and we \text{only sample from host} Ki67, as they are purely of type host. However, this makes little difference in reality as we already showed that after 30wks host and donor Ki67 are pretty much indistinguishable (ANOVA, not shown here but easy to do).
+
+To\marginnote{Note that we take the weighted average of the \textbf{mean times} not the \textbf{rates}} calculate the pooled population values of $1/\rho$ and $1/\delta$ we take the weighted population average 
+\begin{equation}
+\frac{1}{\rho_T }= \frac{\alpha  N_0}{N_T}\frac{1}{\rho_I}+\left(1-\frac{\alpha  N_0}{N_T}\right)\frac{1}{\rho_D}
+\end{equation}
+and the same for $\delta$.
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+%\bibliography{bibliography} % Use the bibliography.bib file for the bibliography
+%\bibliographystyle{plainnat} % Use the plainnat style of referencing
+
+%----------------------------------------------------------------------------------------
+
+\printindex % Print the index at the very end of the document
+
+\end{document}

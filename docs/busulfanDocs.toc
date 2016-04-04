@@ -1,0 +1,51 @@
+\contentsline {section}{Files}{5}{section*.3}
+\contentsline {subsection}{BusulfanPackages.R}{5}{subsection*.4}
+\contentsline {subsection}{DataPrepare.R}{5}{subsection*.5}
+\contentsline {subsection}{BusulfanNaiveFit.R}{5}{subsection*.6}
+\contentsline {subsection}{AgeDependentLoss.R}{5}{subsection*.7}
+\contentsline {subsection}{Analysis.R}{6}{subsection*.8}
+\contentsline {chapter}{DataPrepare.R}{7}{chapter*.9}
+\contentsline {section}{Overview}{7}{section*.10}
+\contentsline {section}{Outputs}{7}{section*.11}
+\contentsline {section}{User defined toggles}{7}{section*.12}
+\contentsline {subsection}{\texttt {cell.Types.nai}}{7}{subsection*.13}
+\contentsline {subsection}{\texttt {thymic.precursors}}{8}{subsection*.14}
+\contentsline {subsection}{\texttt {cell.Types.others}}{8}{subsection*.15}
+\contentsline {subsection}{\texttt {peripheral.precursors}}{8}{subsection*.16}
+\contentsline {subsection}{\texttt {cell.Types}}{8}{subsection*.17}
+\contentsline {subsection}{\texttt {t.Shift}}{8}{subsection*.18}
+\contentsline {subsection}{\texttt {organ.Set}}{8}{subsection*.19}
+\contentsline {subsection}{\texttt {naughty.mice}}{8}{subsection*.20}
+\contentsline {section}{Function glossary (not exhaustive)}{9}{section*.21}
+\contentsline {subsection}{\texttt {collect.data(cell, organ.list, set)}}{9}{subsection*.22}
+\contentsline {subsection}{\texttt {get.ki67.numbers(cell, organ, population)}}{9}{subsection*.23}
+\contentsline {subsection}{\texttt {export.Table(frame, file.name)}}{9}{subsection*.24}
+\contentsline {chapter}{BusulfanNaiveFit.R}{11}{chapter*.25}
+\contentsline {section}{Overview}{11}{section*.26}
+\contentsline {section}{Derivation of analytics}{11}{section*.27}
+\contentsline {section}{Fitting procedure preliminaries}{12}{section*.28}
+\contentsline {subsection}{ \texttt {header}}{13}{subsection*.29}
+\contentsline {section}{Function and variable glossary}{13}{section*.30}
+\contentsline {subsection}{\texttt {ratioFn(t, pars)} and \texttt {totalCountFn(t, pars)}}{13}{subsection*.31}
+\contentsline {subsection}{Transforms \texttt {T(x) and T2(x)}}{13}{subsection*.32}
+\contentsline {subsection}{\texttt {TransformFunctions(inVec, nu)}}{14}{subsection*.33}
+\contentsline {subsection}{\texttt {residFn(parameters, cDat, rDat, nuVal)}}{14}{subsection*.34}
+\contentsline {subsection}{\texttt {SSRfn(inVec,cDat,rDat,nuVal)}}{14}{subsection*.35}
+\contentsline {subsection}{\texttt {findFit(dVec, nuVal)}}{15}{subsection*.36}
+\contentsline {subsection}{\texttt {doBoot(pairedMice)}}{15}{subsection*.37}
+\contentsline {section}{Parallel implementation of bootstraping}{15}{section*.38}
+\contentsline {chapter}{AgeDependentLoss.R}{17}{chapter*.39}
+\contentsline {section}{Overview}{17}{section*.40}
+\contentsline {section}{Settings to keep in mind}{17}{section*.41}
+\contentsline {section}{Function and variable glossary}{17}{section*.42}
+\contentsline {subsection}{\texttt {functions}}{17}{subsection*.43}
+\contentsline {subsection}{\texttt {fit.thymic.pararameters(precursor.counts,donor.precursor.dp1}}{18}{subsection*.44}
+\contentsline {subsection}{\texttt {calculate.outputs(t,all.pars)}}{18}{subsection*.45}
+\contentsline {chapter}{Analysis.R}{19}{chapter*.46}
+\contentsline {section}{Overview}{19}{section*.47}
+\contentsline {section}{Settings to keep in mind}{19}{section*.48}
+\contentsline {section}{Primary outputs}{20}{section*.49}
+\contentsline {subsection}{\texttt {physicalPars}}{20}{subsection*.50}
+\contentsline {subsection}{\texttt {countPlot}, \texttt {ratioPlot}, and \texttt {incumbentFracPlot}}{20}{subsection*.51}
+\contentsline {subsection}{\texttt {kinetic.Parameters}}{20}{subsection*.52}
+\contentsfinish 

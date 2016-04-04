@@ -1,0 +1,1 @@
+rquantileest <- sapply(1:9, function(TYPE) quantile(theta(bootFitData), .975, type=TYPE)) 

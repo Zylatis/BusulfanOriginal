@@ -1,0 +1,4 @@
+dxdt[0]=(A0*chi*TonA)/pow(E,nu*t) - (beta + lambdaA)*x[0];
+dxdt[1]=(A0*(1 - chi)*TonA)/pow(E,nu*t) - (beta + lambdaA)*x[1];
+dxdt[2]=beta*x[0] - lambdaB*x[2];
+dxdt[3]=beta*x[1] - lambdaB*x[3];
